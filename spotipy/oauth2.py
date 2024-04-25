@@ -165,6 +165,7 @@ class SpotifyClientCredentials(SpotifyAuthBase):
         client_id=None,
         client_secret=None,
         proxies=None,
+        verify=True,
         requests_session=True,
         requests_timeout=None,
         cache_handler=None
@@ -201,6 +202,7 @@ class SpotifyClientCredentials(SpotifyAuthBase):
         self.client_id = client_id
         self.client_secret = client_secret
         self.proxies = proxies
+        self.verify = verify
         self.requests_timeout = requests_timeout
         if cache_handler:
             assert issubclass(cache_handler.__class__, CacheHandler), \
@@ -260,6 +262,7 @@ class SpotifyClientCredentials(SpotifyAuthBase):
                 headers=headers,
                 verify=True,
                 proxies=self.proxies,
+                verify=self.verify,
                 timeout=self.requests_timeout,
             )
             response.raise_for_status()
@@ -294,6 +297,7 @@ class SpotifyOAuth(SpotifyAuthBase):
             cache_path=None,
             username=None,
             proxies=None,
+            verify=True,
             show_dialog=False,
             requests_session=True,
             requests_timeout=None,
@@ -362,6 +366,7 @@ class SpotifyOAuth(SpotifyAuthBase):
                 cache_path=cache_path
             )
         self.proxies = proxies
+        self.verify = verify
         self.requests_timeout = requests_timeout
         self.show_dialog = show_dialog
         self.open_browser = open_browser
@@ -554,6 +559,7 @@ class SpotifyOAuth(SpotifyAuthBase):
                 headers=headers,
                 verify=True,
                 proxies=self.proxies,
+                verify=self.verify,
                 timeout=self.requests_timeout,
             )
             response.raise_for_status()
@@ -583,6 +589,7 @@ class SpotifyOAuth(SpotifyAuthBase):
                 data=payload,
                 headers=headers,
                 proxies=self.proxies,
+                verify=self.verify,
                 timeout=self.requests_timeout,
             )
             response.raise_for_status()
@@ -648,6 +655,7 @@ class SpotifyPKCE(SpotifyAuthBase):
                  cache_path=None,
                  username=None,
                  proxies=None,
+                 verify=True,
                  requests_timeout=None,
                  requests_session=True,
                  open_browser=True,
@@ -708,6 +716,7 @@ class SpotifyPKCE(SpotifyAuthBase):
                 cache_path=cache_path
             )
         self.proxies = proxies
+        self.verify = verify
         self.requests_timeout = requests_timeout
 
         self._code_challenge_method = "S256"  # Spotify requires SHA256
@@ -916,7 +925,7 @@ class SpotifyPKCE(SpotifyAuthBase):
                 self.OAUTH_TOKEN_URL,
                 data=payload,
                 headers=headers,
-                verify=True,
+                verify=self.verify,
                 proxies=self.proxies,
                 timeout=self.requests_timeout,
             )
@@ -948,6 +957,7 @@ class SpotifyPKCE(SpotifyAuthBase):
                 data=payload,
                 headers=headers,
                 proxies=self.proxies,
+                verify=self.verify,
                 timeout=self.requests_timeout,
             )
             response.raise_for_status()
