@@ -260,7 +260,6 @@ class SpotifyClientCredentials(SpotifyAuthBase):
                 self.OAUTH_TOKEN_URL,
                 data=payload,
                 headers=headers,
-                verify=True,
                 proxies=self.proxies,
                 verify=self.verify,
                 timeout=self.requests_timeout,
