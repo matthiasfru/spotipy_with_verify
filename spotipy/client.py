@@ -130,6 +130,7 @@ class Spotify(object):
         oauth_manager=None,
         auth_manager=None,
         proxies=None,
+        verify=True,
         requests_timeout=5,
         status_forcelist=None,
         retries=max_retries,
@@ -178,6 +179,7 @@ class Spotify(object):
         self.oauth_manager = oauth_manager
         self.auth_manager = auth_manager
         self.proxies = proxies
+        self.verify = verify
         self.requests_timeout = requests_timeout
         self.status_forcelist = status_forcelist or self.default_retry_codes
         self.backoff_factor = backoff_factor
@@ -265,6 +267,7 @@ class Spotify(object):
         try:
             response = self._session.request(
                 method, url, headers=headers, proxies=self.proxies,
+                verify = self.verify,
                 timeout=self.requests_timeout, **args
             )
 
